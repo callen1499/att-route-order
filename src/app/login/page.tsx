@@ -1,14 +1,39 @@
-"use client";
-import { useState } from "react";
-import { useRouter } from "next/navigation";
-import { createSupabaseBrowserClient } from "@/lib/supabase/browser";
-export default function Login(){
-  const s = createSupabaseBrowserClient(); const r = useRouter();
-  const [email,setEmail]=useState(""); const [password,setPassword]=useState(""); const [err,setErr]=useState("");
-  return <div className="card" style={{maxWidth:420,margin:"40px auto"}}><h1>Sign In</h1>
-    <form onSubmit={async(e)=>{e.preventDefault();const {error}=await s.auth.signInWithPassword({email,password});if(error) setErr(error.message); else r.push('/dashboard');}}>
-      <input className="input" value={email} onChange={e=>setEmail(e.target.value)} placeholder="email" /><br/><br/>
-      <input className="input" type="password" value={password} onChange={e=>setPassword(e.target.value)} placeholder="password" /><br/><br/>
-      {err && <p>{err}</p>}<button className="button" type="submit">Sign In</button>
-    </form></div>;
+import { signIn } from "./actions";
+
+export default function LoginPage({
+  searchParams,
+}: {
+  searchParams?: { error?: string };
+}) {
+  const err = searchParams?.error ? decodeURIComponent(searchParams.error) : "";
+
+  return (
+    <div className="card" style={{ maxWidth: 420, margin: "40px auto" }}>
+      <h1 className="text-2xl font-bold mb-2">Sign In</h1>
+      <p className="text-sm text-gray-600 mb-4">Email and password only.</p>
+
+      <form action={signIn} className="space-y-3">
+        <input
+          className="input"
+          type="email"
+          name="email"
+          placeholder="you@company.com"
+          required
+        />
+        <input
+          className="input"
+          type="password"
+          name="password"
+          placeholder="••••••••"
+          required
+        />
+
+        {err ? <p className="text-sm text-red-700">{err}</p> : null}
+
+        <button className="button w-full" type="submit">
+          Sign In
+        </button>
+      </form>
+    </div>
+  );
 }
