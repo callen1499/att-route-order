@@ -1,1 +1,0 @@
-export default async function Confirmation({params}:{params:Promise<{orderId:string}>}){ const {orderId}=await params; return <div className="card"><h1>Order Submitted</h1><p>Order ID: {orderId}</p><p>Billing at delivery.</p></div>; }
