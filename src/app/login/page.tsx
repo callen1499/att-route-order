@@ -1,18 +1,14 @@
 "use client";
 
-import { useSearchParams } from "next/navigation";
 import { useState } from "react";
 import { createSupabaseBrowserClient } from "@/lib/supabase/browser";
 
 export default function LoginPage() {
-  const searchParams = useSearchParams();
-  const err = searchParams.get("error") ? decodeURIComponent(searchParams.get("error")!) : "";
-
   const supabase = createSupabaseBrowserClient();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
-  const [msg, setMsg] = useState(err);
+  const [msg, setMsg] = useState("");
 
   async function onSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -28,7 +24,7 @@ export default function LoginPage() {
       return;
     }
 
-    // Force a full navigation so cookies/session are applied everywhere
+    // Full navigation so session/cookies apply everywhere
     window.location.href = "/dashboard";
   }
 
