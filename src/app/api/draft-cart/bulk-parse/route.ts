@@ -20,10 +20,10 @@ export async function POST(req: Request) {
     const rawText = typeof body?.rawText === "string" ? body.rawText : "";
 
     const lines = rawText
-      .split(/\r?\n/)
-      .map((l: string) => l.trim())
-      .filter(Boolean)
-      .slice(0, 200);
+    .split(/\r?\n/)
+    .map((l: string) => l.trim())
+    .filter((l: string) => Boolean(l))
+    .slice(0, 200);
 
     const matched: Array<{ input: string; productId: string; name: string; qty: number }> = [];
     const unmatched: Array<{ input: string; reason: string }> = [];
