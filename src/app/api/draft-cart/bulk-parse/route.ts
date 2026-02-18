@@ -21,7 +21,7 @@ export async function POST(req: Request) {
 
     const lines = rawText
       .split(/\r?\n/)
-      .map((l) => l.trim())
+      .map((l: string) => l.trim())
       .filter(Boolean)
       .slice(0, 200);
 
