@@ -25,16 +25,12 @@ export async function createSupabaseServerClient() {
         set(name: string, value: string, options: CookieOptions) {
           try {
             c.set({ name, value, ...options });
-          } catch {
-            // ignore if called during server component render
-          }
+          } catch {}
         },
         remove(name: string, options: CookieOptions) {
           try {
             c.set({ name, value: "", ...options });
-          } catch {
-            // ignore if called during server component render
-          }
+          } catch {}
         },
       },
     }
