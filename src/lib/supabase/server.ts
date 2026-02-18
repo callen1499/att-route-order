@@ -12,7 +12,7 @@ type CookieOptions = {
 };
 
 export async function createSupabaseServerClient() {
-  const c = await cookies();
+  const cookieStore = await cookies();
 
   return createServerClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
@@ -20,16 +20,16 @@ export async function createSupabaseServerClient() {
     {
       cookies: {
         get(name: string) {
-          return c.get(name)?.value;
+          return cookieStore.get(name)?.value;
         },
         set(name: string, value: string, options: CookieOptions) {
           try {
-            c.set({ name, value, ...options });
+            cookieStore.set({ name, value, ...options });
           } catch {}
         },
         remove(name: string, options: CookieOptions) {
           try {
-            c.set({ name, value: "", ...options });
+            cookieStore.set({ name, value: "", ...options });
           } catch {}
         },
       },
